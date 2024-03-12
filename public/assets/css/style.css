@@ -1,0 +1,71 @@
+h1 {
+    color: #fff;
+    text-align: center;
+    margin: 20px 0;
+}
+
+form {
+    padding: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    color:white;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+h2 {
+    color: #337ab7;
+    margin-bottom: 10px;
+}
+
+p {
+    margin-bottom: 15px;
+}
+
+.authors {
+    font-style: italic;
+    color: #555;
+    margin-bottom: 15px;
+}
+
+.published-date {
+    color: #888;
+}
+
+.article{
+    padding:20px;
+    margin-bottom:10px;
+}
+
+.article a{
+    all:unset;
+    cursor:pointer
+}
+
+.article h2,p{
+    color:white;
+}
