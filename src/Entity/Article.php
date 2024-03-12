@@ -25,13 +25,14 @@ class Article
     #[ORM\Column(type: Types::DATETIMETZ_MUTABLE)]
     private ?\DateTimeInterface $creationDate = null;
 
-    #[ORM\ManyToMany(targetEntity: ArticleAuthor::class, mappedBy: 'article', cascade: ['persist'])]
-    private Collection $articleAuthors;
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'articles')]
+    private Collection $users;
 
     public function __construct()
     {
         $this->author = new ArrayCollection();
         $this->articleAuthors = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -76,27 +77,27 @@ class Article
     }
 
     /**
-     * @return Collection<int, ArticleAuthor>
+     * @return Collection<int, User>
      */
-    public function getArticleAuthors(): Collection
+    public function getUsers(): Collection
     {
-        return $this->articleAuthors;
+        return $this->users;
     }
 
-    public function addArticleAuthor(ArticleAuthor $articleAuthor): static
+    public function addUser(User $user): static
     {
-        if (!$this->articleAuthors->contains($articleAuthor)) {
-            $this->articleAuthors->add($articleAuthor);
-            $articleAuthor->addArticle($this);
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
+            $user->addArticle($this);
         }
 
         return $this;
     }
 
-    public function removeArticleAuthor(ArticleAuthor $articleAuthor): static
+    public function removeUser(User $user): static
     {
-        if ($this->articleAuthors->removeElement($articleAuthor)) {
-            $articleAuthor->removeArticle($this);
+        if ($this->users->removeElement($user)) {
+            $user->removeArticle($this);
         }
 
         return $this;

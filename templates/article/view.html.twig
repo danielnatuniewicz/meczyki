@@ -8,11 +8,9 @@
             <div class="article border rounded border-info">
                 <p>{{ article.text }}</p>
                 <p class="authors">Authors:
-                    {% for articleAuthor in article.articleAuthors %}
-                        {% for author in articleAuthor.author %}
-                            {{ author.username }}
-                            {% if not loop.last %}, {% endif %}
-                        {% endfor %}
+                    {% for author in article.users %}
+                        {{ author.username }}
+                        {% if not loop.last %}, {% endif %}
                     {% endfor %}
                 </p>
                 <p class="published-date">Published on: {{ article.creationDate|date('Y-m-d H:i:s') }}</p>

@@ -11,11 +11,9 @@
                     <h2><a href="{{ path('view_article', {'id': article.id}) }}">{{ article.title }}</a></h2>
                     <p>{{ article.text }}</p>
                     <p class="authors">Authors:
-                        {% for articleAuthor in article.articleAuthors %}
-                            {% for author in articleAuthor.author %}
+                        {% for author in article.users %}
                                 {{ author.username }}
                                 {% if not loop.last %}, {% endif %}
-                            {% endfor %}
                         {% endfor %}
                     </p>
                     <p class="published-date">Published on: {{ article.creationDate|date('Y-m-d H:i:s') }}</p>

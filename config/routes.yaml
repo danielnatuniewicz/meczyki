@@ -13,10 +13,6 @@ api_get_article:
     path: '/api/article/{id}'
     controller: 'App\Controller\ApiArticleController::getArticle'
     methods: GET
-api_delete_article:
-    path: '/api/article/{id}/delete'
-    controller: 'App\Controller\ApiArticleController:deleteArticle'
-    methods: DELETE
 api_add_article:
     path: '/api/article/add'
     controller: 'App\Controller\ApiArticleController::addArticle'

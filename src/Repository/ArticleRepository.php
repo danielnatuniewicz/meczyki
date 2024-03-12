@@ -26,15 +26,14 @@ class ArticleRepository extends ServiceEntityRepository
         $startDate = new \DateTime('-1 week');
 
         $qb = $this->createQueryBuilder('a')
-        ->select('u.id, u.username, COUNT(a.id) as postCount')
-        ->join('a.articleAuthors', 'aa')
-        ->join('aa.author', 'u')
-        ->where('a.creationDate >= :start')
-        ->setParameter('start', $startDate)
-        ->groupBy('u.id, u.username')
-        ->orderBy('postCount', 'DESC')
-        ->setMaxResults($limit);
-
+            ->select('u.id, u.username, COUNT(a.id) as postCount')
+            ->join('a.users', 'u') 
+            ->where('a.creationDate >= :start')
+            ->setParameter('start', $startDate)
+            ->groupBy('u.id, u.username')
+            ->orderBy('postCount', 'DESC')
+            ->setMaxResults($limit);
+    
         return $qb->getQuery()->getResult();
     }
 

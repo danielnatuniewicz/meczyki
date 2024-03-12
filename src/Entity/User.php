@@ -31,12 +31,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\ManyToMany(targetEntity: ArticleAuthor::class, mappedBy: 'author', cascade: ['persist'])]
-    private Collection $articleAuthors;
+    #[ORM\ManyToMany(targetEntity: Article::class, inversedBy: 'users')]
+    private Collection $articles;
+
 
     public function __construct()
     {
-        $this->articleAuthors = new ArrayCollection();
+        $this->articles = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -110,28 +111,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, ArticleAuthor>
+     * @return Collection<int, Article>
      */
-    public function getArticleAuthors(): Collection
+    public function getArticles(): Collection
     {
-        return $this->articleAuthors;
+        return $this->articles;
     }
 
-    public function addArticleAuthor(ArticleAuthor $articleAuthor): static
+    public function addArticle(Article $article): static
     {
-        if (!$this->articleAuthors->contains($articleAuthor)) {
-            $this->articleAuthors->add($articleAuthor);
-            $articleAuthor->addAuthor($this);
+        if (!$this->articles->contains($article)) {
+            $this->articles->add($article);
         }
 
         return $this;
     }
 
-    public function removeArticleAuthor(ArticleAuthor $articleAuthor): static
+    public function removeArticle(Article $article): static
     {
-        if ($this->articleAuthors->removeElement($articleAuthor)) {
-            $articleAuthor->removeAuthor($this);
-        }
+        $this->articles->removeElement($article);
 
         return $this;
     }

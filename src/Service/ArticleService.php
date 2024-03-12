@@ -53,11 +53,8 @@ class ArticleService
         $article->setTitle($data['title']);
         $article->setText($data['text']);
         $article->setCreationDate($this->date);
-        
-        $articleAuthor = new ArticleAuthor();
-        $articleAuthor->addAuthor($user);
 
-        $article->addArticleAuthor($articleAuthor);
+        $article->addUser($user);
 
         $this->em->persist($article);
         $this->em->flush();
@@ -72,20 +69,15 @@ class ArticleService
 
         $authorExist = false;
 
-        foreach($article->getArticleAuthors() as $articleAuthor){
-            foreach ($articleAuthor->getAuthor() as $author) {
-                if($author->getId() == $user->getId()){
-                    $authorExist = true;
-                    break 2;
-                }
+        foreach($article->getUsers() as $author){
+            if($author->getId() == $user->getId()){
+                $authorExist = true;
+                break;
             }
         }
         
         if(!$authorExist){
-            $articleAuthor = new ArticleAuthor();
-            $articleAuthor->addAuthor($user);
-            
-            $article->addArticleAuthor($articleAuthor);
+            $article->addUser($user);
         }
 
         $this->em->persist($article);
@@ -98,6 +90,6 @@ class ArticleService
     {
         $user = $this->userRepository->findOneById($userId);
         
-        return $user->getArticleAuthors();
+        return $user->getArticles();
     }
 }

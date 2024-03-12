@@ -90,23 +90,19 @@ class ApiArticleController extends AbstractController
         $articles = $this->articleS->getAuthorArticlesById($id);
     
         $array = array();
-    
-        foreach ($articles as $authorArticle) {
-                $authors = $authorArticle->getAuthor();
 
-                $article = $authorArticle->getArticle()->first();
-
-                $userArray = array();
-                foreach ($authors as $author) {
-                    $userArray[] = ['username' => $author->getUsername()];
-                }
-
-                $array[] = [
-                    'id' => $article->getId(),
-                    'title' => $article->getTitle(), 
-                    'text' => $article->getText(),
-                    'authors' => $userArray];
-         
+        foreach($articles as $article)
+        {
+            $userArray = array();
+            foreach($article->getUsers() as $author){
+                $userArray[] = ['username' => $author->getUsername()];
+            }
+            
+            $array[] = [
+                'id' => $article->getId(),
+                'title' => $article->getTitle(), 
+                'text' => $article->getText(),
+                'authors' => $userArray];
         }
         
         return new JsonResponse([
@@ -134,10 +130,8 @@ class ApiArticleController extends AbstractController
 
             $userArray = array();
 
-            foreach ($article->getArticleAuthors() as $authorArticle) {
-                foreach ($authorArticle->getAuthor() as $author) {
-                    $userArray[] = ['id' => $author->getId(), 'username' => $author->getUsername()];
-                }
+            foreach ($article->getUsers() as $author) {
+                $userArray[] = ['id' => $author->getId(), 'username' => $author->getUsername()];
             }
 
             return new JsonResponse([
