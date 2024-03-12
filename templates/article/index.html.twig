@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Lista Artykułów{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Lista Artykułów</h1>
+
+            {% for article in articles %}
+                <div class="article border rounded border-info">
+                    <h2><a href="{{ path('view_article', {'id': article.id}) }}">{{ article.title }}</a></h2>
+                    <p>{{ article.text }}</p>
+                    <p class="authors">Authors:
+                        {% for articleAuthor in article.articleAuthors %}
+                            {% for author in articleAuthor.author %}
+                                {{ author.username }}
+                                {% if not loop.last %}, {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+                    </p>
+                    <p class="published-date">Published on: {{ article.creationDate|date('Y-m-d H:i:s') }}</p>
+                </div>
+            {% endfor %}
+    </div>
+{% endblock %}

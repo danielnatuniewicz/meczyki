@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dodawanie artykułu{% endblock %}
+{% block body %}
+    <div class="container">
+        <h1>Dodawanie artykułu</h1>
+
+        <div id="status"></div>
+
+        <form id="editArticle" method="POST">
+            <label for="title">Tytuł:</label>
+            <input  type="text" id="title" value="{{ article.title }}" name="title" />
+            <label for="text">Treść artykułu:</label>
+            <textarea name="text" id="text" rows="4" cols="50">{{ article.text }}</textarea>
+            <button type="submit">Edytuj</button>
+        </form>
+    </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById('editArticle').addEventListener('submit', async function(event) {
+        event.preventDefault();
+        try{
+            const formData = new FormData(this);
+
+            const response = await fetch('/api/article/{{article.id}}/edit', {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    title: formData.get('title'),
+                    text: formData.get('text')
+                })
+            })
+
+            const responseData = await response.json();
+
+            if(response.ok){
+                if(responseData.status == 200){
+                    document.getElementById('status').innerHTML = '<div class="alert alert-success">' + responseData.message + '</div>';
+                }else{
+                    document.getElementById('status').innerHTML = '<div class="alert alert-danger">' + responseData.message + '</div>';
+                }
+                
+                return;
+            }
+
+            document.getElementById('status').innerHTML = '<div class="alert alert-danger">' + responseData.message + '</div>';
+
+        }catch(error) {
+            document.getElementById('status').innerHTML = '<div class="alert alert-danger">Błąd połączenia z serwerem</div>';
+        }
+    });
+    });
+
+</script>
+{% endblock %}

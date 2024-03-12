@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Top autorzy{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Top autorzy</h1>
+
+            {% for author in authors %}
+            <div class="article border rounded border-info">
+                <h2>{{ author.username }}</h2>
+                <p>Liczba postów: {{ author.postCount }}</p>
+            </div>
+            {% endfor %}
+    </div>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Lista Artykułów{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>{{ article.title }}</h1>
+            <div class="article border rounded border-info">
+                <p>{{ article.text }}</p>
+                <p class="authors">Authors:
+                    {% for articleAuthor in article.articleAuthors %}
+                        {% for author in articleAuthor.author %}
+                            {{ author.username }}
+                            {% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                </p>
+                <p class="published-date">Published on: {{ article.creationDate|date('Y-m-d H:i:s') }}</p>
+                <a href="{{ path('edit_article', {'id': article.id}) }}"><button>Edytuj</button></a>
+            </div>
+    </div>
+{% endblock %}
