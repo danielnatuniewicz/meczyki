@@ -1,8 +1,5 @@
 # Meczyki Symfony - Recruitment Task
 
-## Live Version
-Check out the live version of this project on [https://meczyki.pysznykod.pl](https://meczyki.pysznykod.pl).
-
 ## API Endpoints
 - **/api/top-authors** Get the top 3 authors of the week.
 - **/api/author/{id}/articles** Get articles by an author.
